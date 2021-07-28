@@ -2,14 +2,26 @@
 class Application{
    constructor(args){
       this.root = args.root;
-      this.list = [
-         {id: 1, text: 'learn HTML', done: true, delete: false, },
+
+      if( localStorage.getItem("__TODO_APP_LIST__") ){
+         this.list = JSON.parse(localStorage.getItem("__TODO_APP_LIST__"))
+      } else {
+         this.list = [{id: 1, text: 'learn HTML', done: true, delete: false, },
          {id: 2, text: 'learn CSS', done: false, delete: false, },
          {id: 3, text: 'learn JS', done: false, delete: false, },
          {id: 4, text: 'learn react JS', done: false, delete: false, },
          {id: 5, text: 'learn redux', done: false, delete: false, },
-         {id: 6, text: 'learn git-hub', done: false, delete: false, },
-      ];
+         {id: 6, text: 'learn git-hub', done: false, delete: false, },];
+      }
+
+      // this.list = [
+      //    {id: 1, text: 'learn HTML', done: true, delete: false, },
+      //    {id: 2, text: 'learn CSS', done: false, delete: false, },
+      //    {id: 3, text: 'learn JS', done: false, delete: false, },
+      //    {id: 4, text: 'learn react JS', done: false, delete: false, },
+      //    {id: 5, text: 'learn redux', done: false, delete: false, },
+      //    {id: 6, text: 'learn git-hub', done: false, delete: false, },
+      // ];
 
       this.dom = this.getBasicDOM();
       this.dom.addEventListener('click', (event)=> {
@@ -29,6 +41,8 @@ class Application{
    update(){
       this.root.append( this.dom )
       this.root.querySelector('ul').innerHTML = '';
+
+      localStorage.setItem("__TODO_APP_LIST__", JSON.stringify(this.list));
 
       this.list.map(item => {
          if(item.delete){
